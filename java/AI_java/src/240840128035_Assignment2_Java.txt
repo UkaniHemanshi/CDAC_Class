@@ -1,0 +1,481 @@
+//**********PRN: 240840128035 ****************************************************
+
+//***************************ALL FILES********************************************
+
+//********* Toy.java *************************************************************
+
+package class_assignment2;
+
+
+public class Toy implements Comparable<Toy>
+{
+	protected int product_id;
+	protected String name;
+	protected String category;
+	protected double price;
+	protected int age;
+	protected String purchase_month;
+	protected int year;
+	
+	public Toy(int product_id, String name, String category, double price, int age, String purchase_month, int year) {
+		super();
+		this.product_id = product_id;
+		this.name = name;
+		this.category = category;
+		this.price = price;
+		this.age = age;
+		this.purchase_month = purchase_month;
+		this.year = year;
+	}
+	
+	// Getter and Setter 
+	public int getProduct_id() {
+		return product_id;
+	}
+
+	public void setProduct_id(int product_id) {
+		this.product_id = product_id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getPurchase_month() {
+		return purchase_month;
+	}
+
+	public void setPurchase_month(String purchase_month) {
+		this.purchase_month = purchase_month;
+	}
+
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
+	@Override
+	public String toString() {
+		return "Toy_Data:\nproduct_id = " + product_id + "\nname = " + name + "\ncategory = " + category + "\nprice = " + price + "\nage = " + age + "\npurchase_month = " + purchase_month + "\nyear = " + year + "\n";
+	}
+
+	@Override
+	public int compareTo(Toy o) {
+		return this.product_id - o.product_id;
+	}	
+}
+
+
+//********* ToyCollections.java **************************************************
+
+package class_assignment2;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class ToyCollections 
+{
+	public List<Toy> addToyData()  // function for add a toy into collection of list
+	{
+		List<Toy> toylist = new ArrayList<>();
+		toylist.add(new Toy(201,"Soft Plush Toy","Educational",1328.17,2,"Jan",2023));
+		toylist.add(new Toy(209,"Ride-On Toy","Battery Operated",4565.00,2,"Sep",2023));
+		toylist.add(new Toy(202,"Wooden Building Blocks","Educational",2115.50,5,"Feb",2024));
+		toylist.add(new Toy(207,"Remote-Controlled Car","Battery Operated",2865.50,12,"July",2023));
+		toylist.add(new Toy(203,"Dinosaur Action Figure","Educational",1058.25,10,"March",2022));
+		
+		return toylist;
+	}
+	
+	// 1. for printing toy collections
+	public void printList(List<Toy> toylist)
+	{
+		for(Toy toy: toylist)
+		{
+			System.out.println(toy);
+		}
+	}
+	
+	// 2. filtering by category
+	public List<Toy> filterCategory(List<Toy> toylist,String filterChoice)
+	{
+		List<Toy> filtered = new ArrayList<>();
+		for(Toy toy:toylist)
+		{
+			if(toy.category.equalsIgnoreCase(filterChoice))
+			{
+				filtered.add(toy);
+			}
+		}
+		return filtered;
+	}
+	
+	// 4. filtering by price range
+	public List<Toy> filterPrice(List<Toy> toylist,int MinRange, int MaxRange)
+	{
+		List<Toy> filtered = new ArrayList<>();
+		for(Toy toy:toylist)
+		{
+			if(toy.price >= MinRange & toy.price <= MaxRange)
+			{
+				filtered.add(toy);
+			}
+		}
+		return filtered;
+	}
+	
+	// 5. List toys for a specific age
+	public List<Toy> filterAge(List<Toy> toylist,int check_age)
+	{
+		List<Toy> filtered = new ArrayList<>();
+		for(Toy toy:toylist)
+		{
+			int toy_age = toy.getAge();
+			if(toy_age == check_age)
+			{
+				filtered.add(toy);
+			}
+		}
+		return filtered;
+	}
+	
+	// 7. Make the list of old stock [older than 1 year]
+	public List<Toy> filteroldStock(List<Toy> toylist,int currentYear)
+	{
+		List<Toy> filtered = new ArrayList<>();
+		for(Toy toy:toylist)
+		{
+			int toy_year = toy.getYear();
+			if(toy_year < currentYear)
+			{
+				filtered.add(toy);
+			}
+		}
+		return filtered;
+	}
+	
+	// 8. Group by category
+		public List<Toy> groupByCategory(List<Toy> toylist,String group_choice)
+		{
+			ArrayList filtered = new ArrayList<>();
+			for(Toy toy:toylist)
+			{
+				if(toy.category.equalsIgnoreCase(group_choice))
+				{
+					String name = toy.getName();
+					filtered.add(name);
+				}
+			}
+			return filtered;
+		}
+	
+	
+	public static void main(String[] args) 
+	{
+		ToyCollections tc = new ToyCollections();
+		List<Toy> toylist = tc.addToyData();
+		
+		// 1. List the stock 
+		System.out.println("******* List the Stock of Toys *******");
+		tc.printList(toylist);
+		
+		// 2. Filter the stock by category [e.g. Educational / Battery operated etc]
+		System.out.println("******* Filter the toy collections by category of Educational / Battery operated *******");
+		
+		List<Toy> bycatlistof_E = tc.filterCategory(toylist,"Educational");
+		tc.printList(bycatlistof_E); // print all the toy data whose category is Educational
+		
+//		List<Toy> bycatlistof_B = tc.filterCategory(toylist,"Battery operated");
+//		tc.printList(bycatlistof_B); // print all the toy data whose category is Battery operated
+		
+		// 3. Search toy in the list by using binarySearch (with prod_id as key)
+		System.out.println("******* Search toy by product_id *******");
+		int index = Collections.binarySearch(toylist,new Toy(207,null,null,0,0,null,0));
+		if(index > 0)
+		{
+			System.out.println("Toy Found at index: "+index);
+		}
+		else
+		{
+			System.out.println("Toy not Found !!!");
+		}
+		
+                // 4. List Toys by price range
+		System.out.println("******* List Toys by price range *******");
+		List<Toy> byPriceList = tc.filterPrice(toylist,2000,3000);
+		tc.printList(byPriceList);
+	
+		// 5. List toys for a specific age
+		System.out.println("******* List toys for a specific age *******");
+		List<Toy> byAgeList = tc.filterAge(toylist,2);
+		tc.printList(byAgeList);
+		
+		// 6. Sort the toys by price, rating, prod_id
+		System.out.println("******* Sort the toys by Price *******");
+		toylist.sort(new PriceComparator());
+		tc.printList(toylist);
+		
+		// 7. Make the list of old stock [older than 1 year]
+		System.out.println("******* list of old stock [older than 1 year] *******");
+		List<Toy> byoldStockList = tc.filteroldStock(toylist,2024);
+		tc.printList(byoldStockList);
+		
+		
+		// 8. Make a group of toys as per their category
+		System.out.println("******* Make a group of toys as per their category *******");
+		System.out.println("Educational: "+ tc.groupByCategory(toylist,"Educational"));  // group by Educational
+		
+		System.out.println("Battery operated: "+ tc.groupByCategory(toylist,"Battery operated")); // group by Battery operated	
+		
+	}
+}
+
+
+//********* Output/ *************************************************************
+
+
+******* List the Stock of Toys *******
+Toy_Data:
+product_id = 201
+name = Soft Plush Toy
+category = Educational
+price = 1328.17
+age = 2
+purchase_month = Jan
+year = 2023
+
+Toy_Data:
+product_id = 209
+name = Ride-On Toy
+category = Battery Operated
+price = 4565.0
+age = 2
+purchase_month = Sep
+year = 2023
+
+Toy_Data:
+product_id = 202
+name = Wooden Building Blocks
+category = Educational
+price = 2115.5
+age = 5
+purchase_month = Feb
+year = 2024
+
+Toy_Data:
+product_id = 207
+name = Remote-Controlled Car
+category = Battery Operated
+price = 2865.5
+age = 12
+purchase_month = July
+year = 2023
+
+Toy_Data:
+product_id = 203
+name = Dinosaur Action Figure
+category = Educational
+price = 1058.25
+age = 10
+purchase_month = March
+year = 2022
+
+******* Filter the toy collections by category of Educational / Battery operated *******
+Toy_Data:
+product_id = 201
+name = Soft Plush Toy
+category = Educational
+price = 1328.17
+age = 2
+purchase_month = Jan
+year = 2023
+
+Toy_Data:
+product_id = 202
+name = Wooden Building Blocks
+category = Educational
+price = 2115.5
+age = 5
+purchase_month = Feb
+year = 2024
+
+Toy_Data:
+product_id = 203
+name = Dinosaur Action Figure
+category = Educational
+price = 1058.25
+age = 10
+purchase_month = March
+year = 2022
+
+******* Search toy by product_id *******
+Toy Found at index: 3
+
+******* List Toys by price range *******
+Toy_Data:
+product_id = 202
+name = Wooden Building Blocks
+category = Educational
+price = 2115.5
+age = 5
+purchase_month = Feb
+year = 2024
+
+Toy_Data:
+product_id = 207
+name = Remote-Controlled Car
+category = Battery Operated
+price = 2865.5
+age = 12
+purchase_month = July
+year = 2023
+
+******* List toys for a specific age *******
+Toy_Data:
+product_id = 201
+name = Soft Plush Toy
+category = Educational
+price = 1328.17
+age = 2
+purchase_month = Jan
+year = 2023
+
+Toy_Data:
+product_id = 209
+name = Ride-On Toy
+category = Battery Operated
+price = 4565.0
+age = 2
+purchase_month = Sep
+year = 2023
+
+******* Sort the toys by Price *******
+Toy_Data:
+product_id = 203
+name = Dinosaur Action Figure
+category = Educational
+price = 1058.25
+age = 10
+purchase_month = March
+year = 2022
+
+Toy_Data:
+product_id = 201
+name = Soft Plush Toy
+category = Educational
+price = 1328.17
+age = 2
+purchase_month = Jan
+year = 2023
+
+Toy_Data:
+product_id = 202
+name = Wooden Building Blocks
+category = Educational
+price = 2115.5
+age = 5
+purchase_month = Feb
+year = 2024
+
+Toy_Data:
+product_id = 207
+name = Remote-Controlled Car
+category = Battery Operated
+price = 2865.5
+age = 12
+purchase_month = July
+year = 2023
+
+Toy_Data:
+product_id = 209
+name = Ride-On Toy
+category = Battery Operated
+price = 4565.0
+age = 2
+purchase_month = Sep
+year = 2023
+
+******* list of old stock [older than 1 year] *******
+Toy_Data:
+product_id = 203
+name = Dinosaur Action Figure
+category = Educational
+price = 1058.25
+age = 10
+purchase_month = March
+year = 2022
+
+Toy_Data:
+product_id = 201
+name = Soft Plush Toy
+category = Educational
+price = 1328.17
+age = 2
+purchase_month = Jan
+year = 2023
+
+Toy_Data:
+product_id = 207
+name = Remote-Controlled Car
+category = Battery Operated
+price = 2865.5
+age = 12
+purchase_month = July
+year = 2023
+
+Toy_Data:
+product_id = 209
+name = Ride-On Toy
+category = Battery Operated
+price = 4565.0
+age = 2
+purchase_month = Sep
+year = 2023
+
+******* Make a group of toys as per their category *******
+Educational: [Dinosaur Action Figure, Soft Plush Toy, Wooden Building Blocks]
+Battery operated: [Remote-Controlled Car, Ride-On Toy]
+
+
+
+
+
+
+
+
+
+
+
+
